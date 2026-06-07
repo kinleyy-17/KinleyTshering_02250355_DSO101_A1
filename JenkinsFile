@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+    tools {
+        nodejs 'NodeJS'
+    }
+    environment {
+        DOCKERHUB_USERNAME = 'kyserl11'
+        IMAGE_NAME = 'kyserl11/todo-app'
+stage('Checkout') {
+    steps {
+        timeout(time: 10, unit: 'MINUTES') {
+            git branch: 'main',
+                credentialsId: 'github-creds',
+                url: 'https://github.com/kinleyy-17/KinleyTshering_02250355_DSO101_A1.git'
+        }
+    }
+        stage('Install Dependencies') {
+            steps {
+                dir('backend') {
+                    bat 'npm install'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('backend') {
+                    bat 'echo Build complete'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('backend') {
+                    bat 'npm test'
+                }
+            }
+            post {
+                always {
+                    junit 'backend/junit.xml'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-creds') {
+                        docker.build("${IMAGE_NAME}:latest", './backend').push()
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
