@@ -1,3 +1,5 @@
+# Overwrite JenkinsFile with correct content
+@"
 pipeline {
     agent any
     tools {
@@ -6,14 +8,17 @@ pipeline {
     environment {
         DOCKERHUB_USERNAME = 'kyserl11'
         IMAGE_NAME = 'kyserl11/todo-app'
-stage('Checkout') {
-    steps {
-        timeout(time: 10, unit: 'MINUTES') {
-            git branch: 'main',
-                credentialsId: 'github-creds',
-                url: 'https://github.com/kinleyy-17/KinleyTshering_02250355_DSO101_A1.git'
-        }
     }
+    stages {
+        stage('Checkout') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    git branch: 'main',
+                        credentialsId: 'github-creds',
+                        url: 'https://github.com/kinleyy-17/KinleyTshering_02250355_DSO101_A1.git'
+                }
+            }
+        }
         stage('Install Dependencies') {
             steps {
                 dir('backend') {
@@ -59,3 +64,4 @@ stage('Checkout') {
         }
     }
 }
+"@ | Set-Content "C:\Users\Asus Tuf gaming A15\OneDrive\Desktop\clean-todo-app\JenkinsFile"
