@@ -1,5 +1,3 @@
-# Overwrite JenkinsFile with correct content
-@"
 pipeline {
     agent any
     tools {
@@ -12,11 +10,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    git branch: 'main',
-                        credentialsId: 'github-creds',
-                        url: 'https://github.com/kinleyy-17/KinleyTshering_02250355_DSO101_A1.git'
-                }
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/kinleyy-17/KinleyTshering_02250355_DSO101_A1.git'
             }
         }
         stage('Install Dependencies') {
@@ -64,4 +60,3 @@ pipeline {
         }
     }
 }
-"@ | Set-Content "C:\Users\Asus Tuf gaming A15\OneDrive\Desktop\clean-todo-app\JenkinsFile"
