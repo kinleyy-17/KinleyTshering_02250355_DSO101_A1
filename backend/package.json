@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "start": "node index.js",
-  "test": "jest --ci --reporters=default --reporters=jest-junit",
-  "build": "echo No build step"
-},
- 
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --ci --reporters=default --reporters=jest-junit",
+    "build": "echo No build step"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,6 +18,8 @@
     "pg": "^8.21.0"
   },
   "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-junit": "^17.0.0",
     "nodemon": "^3.1.14"
   }
 }
